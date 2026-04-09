@@ -12,37 +12,29 @@ import { promisify } from 'node:util';
 const execPromise = promisify(exec);
 // y-websocket ships utils as JS; this import path is the canonical embed approach.
 import { setupWSConnection, setPersistence } from 'y-websocket/bin/utils';
-import type * as Yjs from 'yjs';
+import type * as YTypes from 'yjs';
 
 const PORT = Number(process.env.PORT ?? 1234);
 const WS_PATH = process.env.WS_PATH ?? '/collab';
 const PERSISTENCE_DIR = process.env.YPERSISTENCE ?? './.yjs-data';
 
 const require = createRequire(import.meta.url);
-// Important: use the same CJS-loaded Yjs instance as y-websocket to avoid
-// duplicate Yjs imports (constructor checks break otherwise).
-const Y = require('yjs') as typeof import('yjs');
-const { LeveldbPersistence } = require('y-leveldb') as {
-  LeveldbPersistence: new (dir: string) => {
-    getYDoc: (docName: string) => Promise<Yjs.Doc>;
-    storeUpdate: (docName: string, update: Uint8Array) => Promise<void> | void;
-  };
-};
+const Yjs = require('yjs') as any;
+const { LeveldbPersistence } = require('y-leveldb') as any;
 
 const ldb = new LeveldbPersistence(PERSISTENCE_DIR);
 setPersistence({
-  provider: ldb,
-  bindState: async (docName: string, ydoc: Yjs.Doc) => {
+  bindState: async (docName: string, ydoc: YTypes.Doc) => {
     const persistedYdoc = await ldb.getYDoc(docName);
-    const newUpdates = Y.encodeStateAsUpdate(ydoc);
+    const newUpdates = Yjs.encodeStateAsUpdate(ydoc);
     await ldb.storeUpdate(docName, newUpdates);
-    Y.applyUpdate(ydoc, Y.encodeStateAsUpdate(persistedYdoc));
+    Yjs.applyUpdate(ydoc, Yjs.encodeStateAsUpdate(persistedYdoc));
 
     ydoc.on('update', async (update: Uint8Array) => {
       await ldb.storeUpdate(docName, update);
     });
   },
-  writeState: async (_docName: string, _ydoc: Yjs.Doc) => { }
+  writeState: async (_docName: string, _ydoc: YTypes.Doc) => { }
 });
 
 const app = express();
