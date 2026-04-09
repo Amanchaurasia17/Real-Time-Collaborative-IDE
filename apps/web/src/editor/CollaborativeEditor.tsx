@@ -383,8 +383,8 @@ export default function CollaborativeEditor({ roomId }: Props) {
                 setIsRunning(true);
                 setOutput('Running...');
                 try {
-                  const val = editorRef.current.getValue();
-                  const res = await fetch(`http://localhost:1234/api/run`, {
+                  const baseUrl = (import.meta as any).env?.VITE_API_URL ?? 'http://localhost:1234';
+                  const res = await fetch(`${baseUrl}/api/run`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ code: val, language: getLangFromExt(activeFile) })
