@@ -2,6 +2,8 @@
 
 A professional-grade, low-latency collaborative code editor designed for technical interviews, pair programming, and remote collaboration. This project demonstrates advanced distributed systems architecture, infrastructure-as-code, and premium frontend engineering.
 
+**[Live Demo](https://glittering-pastelito-b44db4.netlify.app)**
+
 ## Core Pillars
 
 - **CRDT-Based Collaboration**: Implements Yjs for conflict-free replicated data types. This architecture replaces centralized document locking with mathematically guaranteed eventual consistency.
