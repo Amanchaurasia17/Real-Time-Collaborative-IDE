@@ -116,7 +116,7 @@ export default function CollaborativeEditor({ roomId }: Props) {
     // Populate default files if room is totally new
     provider.on('sync', (isSynced: boolean) => {
       if (isSynced) {
-        if (Array.from(filesMap.keys()).length === 0) {
+        if (Array.from(filesMap.keys()).length === 0 && roomId === 'demo') {
           ydoc.transact(() => {
             filesMap.set('main.cpp', true);
             filesMap.set('docs/architecture.md', true);
