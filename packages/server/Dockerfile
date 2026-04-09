@@ -2,6 +2,9 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+# Install build tools and python for the execution engine
+RUN apk add --no-cache g++ build-base python3
+
 # Copy root configs
 COPY package.json package-lock.json tsconfig.base.json ./
 
