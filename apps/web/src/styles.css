@@ -1,0 +1,345 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg-primary: #050505;
+  --bg-secondary: #0a0a0a;
+  --bg-tertiary: #111111;
+  --bg-hover: rgba(0, 243, 255, 0.1);
+  --border: #1a1a1a;
+  --border-focus: #00f3ff;
+  --text-primary: #00f3ff;
+  --text-secondary: #00a8b1;
+  --text-muted: #004c50;
+  --accent: #00f3ff;
+  --accent-glow: 0 0 10px rgba(0, 243, 255, 0.5);
+  --success: #39ff14;
+  --warning: #fefe33;
+  --danger: #ff003c;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: var(--font-mono);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.02em;
+}
+
+/* 🌀 Scanline Effect Overlay */
+body::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 9999;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+/* ── App Shell ───────────────────────────────────────── */
+.app {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 48px 1fr;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+}
+
+/* ── Header ──────────────────────────────────────────── */
+.header {
+  padding: 0 16px;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: inset 0 -10px 10px -10px rgba(0, 243, 255, 0.2);
+}
+
+.header strong {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: var(--accent-glow);
+  letter-spacing: 2px;
+}
+
+.header strong::before {
+  content: '[';
+  margin-right: 4px;
+  opacity: 0.5;
+}
+
+.header strong::after {
+  content: ']';
+  margin-left: 4px;
+  opacity: 0.5;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent); }
+  50%       { opacity: 0.6; box-shadow: 0 0 14px var(--accent); }
+}
+
+.header input {
+  padding: 5px 10px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.header input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.header label {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* ── Buttons ──────────────────────────────────────────── */
+.header button {
+  padding: 5px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+
+.header button:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent);
+  color: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.header button:active {
+  transform: translateY(0);
+}
+
+.header button:first-of-type {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0d1117;
+  font-weight: 600;
+}
+
+.header button:first-of-type:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #0d1117;
+}
+
+/* ── Badge ────────────────────────────────────────────── */
+.badge {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--badge-bg);
+  color: var(--text-secondary);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: border-color 0.2s;
+}
+
+.badge:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Main Layout ─────────────────────────────────────── */
+.main {
+  display: grid;
+  grid-template-columns: 200px 1fr 260px;
+  height: 100%;
+  min-height: 0;
+}
+
+/* ── Editor Pane ─────────────────────────────────────── */
+.editor {
+  min-height: 0;
+  height: 100%;
+  width: 100%;
+  background: var(--bg-primary);
+}
+
+/* ── Sidebar ──────────────────────────────────────────── */
+.sidebar {
+  border-left: 1px solid var(--border);
+  padding: 16px;
+  overflow: auto;
+  height: 100%;
+  background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sidebar strong {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.sidebar ul {
+  list-style: none;
+  margin-top: 6px;
+}
+
+.sidebar ul li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--text-primary);
+  transition: background 0.15s;
+}
+
+.sidebar ul li:hover {
+  background: var(--bg-tertiary);
+}
+
+.sidebar ul li::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+  flex-shrink: 0;
+  box-shadow: 0 0 6px var(--success);
+}
+
+.sidebar code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: var(--bg-tertiary);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--accent);
+}
+
+/* ── Typography Utilities ───────────────────────────── */
+.small {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ── Spacing Utilities ───────────────────────────────── */
+.ml8  { margin-left: 8px; }
+.mt6  { margin-top: 6px; }
+.mt16 { margin-top: 20px; }
+
+/* ── Status Badge ────────────────────────────────────── */
+.badge.mt6 {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0;
+  padding: 4px 10px;
+}
+
+.badge.mt6::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--warning);
+  flex-shrink: 0;
+}
+
+.spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.sidebar li:hover {
+  background: var(--bg-hover) !important;
+  color: var(--accent) !important;
+}
+
+.terminal-line {
+  color: var(--text-muted);
+  margin-right: 8px;
+  user-select: none;
+}
+
+/*  Yjs Remote Cursors (FAANG Style)  */
+.yRemoteSelection { 
+    background-color: rgba(0, 243, 255, 0.2); 
+}
+.yRemoteSelectionHead {
+    position: absolute;
+    border-left: 2px solid;
+    border-color: inherit;
+    height: 100%;
+    box-sizing: border-box;
+    z-index: 100;
+}
+
+
+.remote-cursor-label {
+  position: absolute;
+  top: -16px;
+  left: -2px;
+  padding: 1px 6px;
+  border-radius: 2px 2px 2px 0;
+  color: #000;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  text-transform: uppercase;
+  opacity: 1;
+  transition: opacity 0.2s;
+}

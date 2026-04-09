@@ -1,0 +1,22 @@
+node_modules/
+dist/
+build/
+coverage/
+.vite/
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Persistence
+.yjs-data/
+**/.yjs-data/
+
+# App junk
+.next/
+.cache/
+*.log
+
+# OS files
+Thumbs.db
+

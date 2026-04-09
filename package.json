@@ -1,0 +1,17 @@
+{
+  "name": "realtime-collab-editor",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,web -c blue,green \"npm run dev -w @rce/server\" \"npm run dev -w @rce/web\"",
+    "build": "npm run build -w @rce/server && npm run build -w @rce/web",
+    "lint": "npm run lint -w @rce/server && npm run lint -w @rce/web",
+    "test": "npm run test -w @rce/server && npm run test -w @rce/web"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

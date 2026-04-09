@@ -1,0 +1,33 @@
+{
+  "name": "@rce/web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -p tsconfig.json && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "monaco-editor": "^0.52.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "y-monaco": "^0.1.6",
+    "y-websocket": "^1.5.0",
+    "yjs": "^13.6.20"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "eslint": "^9.9.0",
+    "globals": "^15.9.0",
+    "happy-dom": "^15.7.4",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2",
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite-plugin-monaco-editor": "^1.1.0",
+    "vitest": "^2.0.5"
+  }
+}
