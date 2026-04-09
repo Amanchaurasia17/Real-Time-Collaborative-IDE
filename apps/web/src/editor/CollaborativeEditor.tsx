@@ -383,6 +383,7 @@ export default function CollaborativeEditor({ roomId }: Props) {
                 setIsRunning(true);
                 setOutput('Running...');
                 try {
+                  const val = editorRef.current.getValue();
                   const baseUrl = (import.meta as any).env?.VITE_API_URL ?? 'http://localhost:1234';
                   const res = await fetch(`${baseUrl}/api/run`, {
                     method: 'POST',
